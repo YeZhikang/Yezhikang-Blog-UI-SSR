@@ -301,13 +301,13 @@ export default {
             }
             switch (currentNav.name) {
                 case undefined:
-                    name = 'Ali-Business-School-Website'
+                    name = 'ali-business-school'
                     this.insideLink = ''
                     this.insideNav = ''
                     this.isInside = false
                     break
                 case 'About ABC':
-                    name = 'ali-read'
+                    name = 'ali-business-school-article-par-item'
                     params = {
                         par: transParName,
                         item: transName
@@ -317,7 +317,7 @@ export default {
                     this.isInside = true
                     break
                 default:
-                    name = 'ali-check'
+                    name = 'ali-business-school-list-par-item'
                     params = {
                         par: transParName,
                         item: transName
@@ -326,8 +326,6 @@ export default {
                     this.insideLink = link
                     this.isInside = true
             }
-
-
 
             console.log(params)
             this.$router.push({
