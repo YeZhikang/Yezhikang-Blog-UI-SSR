@@ -382,6 +382,13 @@ export default {
       font-size: 18px;
     }
 
+    >>> pre code{
+      font-size: 12px;
+      margin: 4px 0 4px 0;
+    }
+
+
+
     .main {
       width: 90%;
       padding-top: 90px;

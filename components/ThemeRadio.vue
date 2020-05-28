@@ -27,7 +27,7 @@ export default {
                 document.body.classList.remove('dark')
                 // this.$refs['theme-radio'].style.backgroundColor = 'white'
             }
-            this.$refs.circle.style.left = this.theme === 'light' ? '0' : '26px'
+            this.$refs.circle.style.left = this.theme === 'light' ? '0' : '24px'
         }
     }
 }
@@ -35,7 +35,7 @@ export default {
 
 <style lang="scss" scoped>
     .theme-radio{
-        width: 48px;
+        width: 46px;
         height: 22px;
         border-radius: 22px;
         position: relative;
@@ -46,11 +46,13 @@ export default {
         &:hover{
             .theme-radio__circle{
                 box-shadow: 0 0 2px 3px #ffa7c4;
+                border: 1px solid #ffa7c4;
             }
         }
         &:focus{
             .theme-radio__circle{
                 box-shadow: 0 0 2px 3px #ffa7c4;
+                border: 1px solid #ffa7c4;
             }
         }
 
@@ -60,7 +62,7 @@ export default {
             justify-content: space-between;
             height: 100%;;
             width: 100%;
-            padding: 7px;
+            padding: 7px 6px;
             box-sizing: border-box;
             color:white;
             font-size: 16px;
@@ -84,16 +86,17 @@ export default {
 
 
     .theme-radio__circle{
-        height: 22px;
-        width: 22px;
+        height: 20px;
+        width: 20px;
         position: absolute;
         left: 0;
         top: 0;
-        box-shadow: 0 0 4px #ff9089;
+        /*box-shadow: 0 0 4px #ff9089;*/
         border-radius: 50%;
         background-color: white;
         transition: 0.2s ease;
         z-index: 99;
+        border: 1px solid #0f1114;
     }
 
 

@@ -179,7 +179,7 @@ export default {
         },
         turnToArticles(urlHash) {
             this.$router.push({
-                name: "_hash",
+                name: "article-hash",
                 params: {
                     hash: urlHash
                 }
