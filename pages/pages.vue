@@ -239,7 +239,7 @@ export default {
 /*}*/
 
 .main-body {
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   margin: 0 auto;
   padding: 180px 0 25px 0;
   text-align: left;

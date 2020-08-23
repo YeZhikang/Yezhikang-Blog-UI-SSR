@@ -36,7 +36,8 @@
           工作经历
         </h1>
         <ul>
-          <li><a class="pjfont">指令集科技 (2020/03 至今)</a> ：前端开发（实习）</li>
+          <li><a class="pjfont">有赞 (2020/07 - 至今)</a> ：前端开发（实习）</li>
+          <li><a class="pjfont">指令集科技 (2020/03 - 2020/07)</a> ：前端开发（实习）</li>
         </ul>
       </div>
       <div class="me-intro-block">
@@ -84,7 +85,7 @@ export default {
 /*    color: white;*/
 /*}*/
 .main-body {
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   margin: 0 auto;
   padding: 180px 0 25px 0;
   text-align: left;

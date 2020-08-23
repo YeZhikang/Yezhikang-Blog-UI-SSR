@@ -23,6 +23,7 @@
         </div>
       </div>
       <div class="htmlBlock" v-html="mdHtml" v-highlight></div>
+      <article-anchor ref="anchor"></article-anchor>
       <!--        <el-card>-->
       <!--          <div style="display: flex;align-items: center;justify-content: space-around;font-size: 16px;line-height: 1.8">-->
       <!--            <img src="../../assets/indexLogo.png" class="imgLogo2">-->
@@ -57,14 +58,15 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/a11y-dark.css';
 import axios from 'axios';
 import marked from 'marked';
+import ArticleAnchor from '@/components/article-anchor';
 
 const translateText = (str) => {
-  return str.replace(/https:\/\/www.yezhikang.site/g, 'http://www.yezhikang.site');
+  return str.replace(/https:\/\/www.yezhikang.site/g, 'http://www.yezhikang.site').replace(/<h1.+<\/h1>/, '');
 };
 
 export default {
   name: 'Article',
-  components: { TheFooter },
+  components: { ArticleAnchor, TheFooter },
   head() {
     return {
       title: `${this.blogInfo.file} - 叶志康`,
@@ -94,7 +96,7 @@ export default {
       time: '',
       category: '',
       blogInfo: {},
-
+      isShowAnchor: false,
       // userName: localStorage.getItem('userName'),
       pngCate: {
         JavaScript,
@@ -135,6 +137,10 @@ export default {
     // }).catch(error => {
     //     console.log(error)
     // })
+    window.addEventListener('scroll', this.addAnchor, false);
+    this.$on('hook:beforeDestroy', () => {
+      window.removeEventListener('scroll', this.addAnchor, false);
+    })
   },
   methods: {
     deleteBlog() {
@@ -150,6 +156,13 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    addAnchor(){
+      if(document.documentElement.scrollTop > 300){
+        this.$refs.anchor.$el.classList.remove('article-anchor__alpha')
+      }else{
+        this.$refs.anchor.$el.classList.add('article-anchor__alpha')
+      }
+    }
   },
   directives: {
     highlight(el) {
@@ -169,7 +182,7 @@ export default {
         const txt = marked(translateText(res.data.text));
         return {
           blogInfo: res.data,
-          mdHtml: marked(translateText(res.data.text)),
+          mdHtml: txt,
         };
         // window.document.title = this.title + " — Yezhikang";
         // loadingInstance1.close()
@@ -190,9 +203,9 @@ export default {
 
 .main {
   text-align: left;
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   margin: 0 auto;
-  padding-top: 180px;
+  padding-top: 160px;
   padding-bottom: 25px;
 }
 
@@ -202,11 +215,26 @@ export default {
 }
 
 .title {
-  font-size: 34px;
+  font-size: 26px;
 }
 
 .htmlBlock >>> p {
   width: 100%;
+  font-size: 15px;
+}
+
+.htmlBlock >>> code{
+  font-family: monaco, serif;
+  font-size: 12px;
+}
+
+.htmlBlock >>> ul{
+  padding-left: 14px;
+  font-size: 14px;
+}
+
+.htmlBlock >>> li p{
+  margin: 4px 0;
 }
 
 .htmlBlock >>> img {

@@ -147,7 +147,7 @@ export default {
   padding-top: 100px;
   height: 100%;
   margin: 0 auto;
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
 }
 
 .container__header {

@@ -23,8 +23,8 @@
         </li>
         <li v-if="!isMobile">
           <h3>
-            <router-link :to="{ name: 'me' }" :class="{ navActive: isActive[0], 'nav-link': true }"
-              >About Me
+            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[0], 'nav-link': true }"
+              >数据结构与算法
             </router-link>
           </h3>
         </li>
@@ -49,38 +49,22 @@ export default {
     };
   },
   methods: {
+    triggerScroll(target){
+      if(document.documentElement.clientWidth < 600){
+        this.isMobile = true;
+        target.classList.add('to-a__collapsed')
+        return;
+      }
+      this.isMobile = false;
+      if(document.documentElement.scrollTop < 20){
+        target.classList.remove('to-a__collapsed')
+      }else{
+        target.classList.add('to-a__collapsed')
+      }
+    },
     addNavListener() {
       let toA = document.querySelector('.to-a');
-
-      function func1() {
-        if (document.documentElement.scrollTop <= 20) {
-          toA.style.height = '165px';
-          toA.classList.add('shadow-box--none');
-        } else {
-          toA.style.height = '58px';
-          toA.classList.add('shadow-box');
-          toA.classList.remove('shadow-box--none');
-        }
-      }
-
-      const func2 = () => {
-        if (innerWidth <= 800) {
-          this.isMobile = true;
-          toA.style.height = '58px';
-
-          removeEventListener('scroll', func1, false);
-        } else {
-          this.isMobile = false;
-
-          addEventListener('scroll', func1, false);
-        }
-      };
-
-      func2();
-      addEventListener('resize', func2, false);
-      if (innerWidth < 720) {
-        removeEventListener('scroll', func1, false);
-      }
+      window.addEventListener('scroll', this.triggerScroll.bind(this, toA));
     },
     // haha2(){
     //     let toA = document.querySelector(".to-a")
@@ -156,6 +140,11 @@ a:hover {
   background-color: white;
 }
 
+.to-a__collapsed {
+  height: 58px;
+  box-shadow: 0 0 6px rgba(0,0,0,.1);
+}
+
 /*.to-a:hover{*/
 /*    box-shadow: none;*/
 /*    height: 112px;*/
@@ -165,7 +154,7 @@ ul {
   display: flex;
   align-items: center;
   padding: 0;
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   height: 100%;
   margin: 0 auto;
   justify-content: space-between;

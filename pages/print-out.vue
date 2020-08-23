@@ -341,7 +341,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   padding-top: 200px;
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   margin: 0 auto;
   box-sizing: border-box;
 
