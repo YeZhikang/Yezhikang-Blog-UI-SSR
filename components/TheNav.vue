@@ -9,8 +9,15 @@
       <div class="button-group">
         <li v-if="!isMobile">
           <h3>
-            <router-link :to="{ name: 'pages' }" :class="{ navActive: isActive[1], 'nav-link': true }"
+            <router-link :to="{ name: 'pages' }" :class="{ navActive: isActive[0], 'nav-link': true }"
               >Articles
+            </router-link>
+          </h3>
+        </li>
+        <li v-if="!isMobile">
+          <h3>
+            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[1], 'nav-link': true }"
+            >数据结构与算法
             </router-link>
           </h3>
         </li>
@@ -18,13 +25,6 @@
           <h3>
             <router-link :to="{ name: 'idea' }" :class="{ navActive: isActive[2], 'nav-link': true }">
               Idea
-            </router-link>
-          </h3>
-        </li>
-        <li v-if="!isMobile">
-          <h3>
-            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[0], 'nav-link': true }"
-              >数据结构与算法
             </router-link>
           </h3>
         </li>
@@ -80,16 +80,23 @@ export default {
   watch: {
     $route: {
       handler: function (val) {
-        if (val.name === 'Home') {
-          this.isActive = [false, false, false];
-        } else if (val.name === 'write') {
-          this.isActive = [false, false, false];
-        } else if (val.name === 'pages' || val.name === 'articles') {
-          this.isActive = [false, true, false];
-        } else if (val.name === 'me') {
-          this.isActive = [true, false, false];
-        } else if (val.name === 'idea') {
-          this.isActive = [false, false, true];
+        console.log(val)
+        switch (val.name){
+          case 'Home':
+            this.isActive = [false, false, false];
+            return;
+          case 'write':
+            this.isActive = [false, false, false];
+            return;
+          case 'pages' || 'articles':
+            this.isActive = [true, false, false];
+            return;
+          case 'algorithm':
+            this.isActive = [false, true, false];
+            return;
+          case 'idea':
+            this.isActive = [false, false, true];
+            return;
         }
       },
       immediate: true,
@@ -115,16 +122,11 @@ a {
 
 a:hover {
   color: #517598;
-  border-top: 5px solid darkcyan;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+
 }
 
 .navActive {
-  color: black;
-  border-top: 5px solid darkcyan;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  color: darkcyan;
 }
 
 .to-a {
