@@ -87,6 +87,7 @@ export default {
     service.get('/api/review/is-login').then(res => {
       this.loadHistory();
       this.getConfig().then(res => this.loadTodayData());
+      this.registerUserName();
     }).catch(e => {
       this.dialogVisible = true;
     });
@@ -203,12 +204,25 @@ export default {
       }).then(res => {
         this.loginLoading = this.dialogVisible = false;
         this.$message.success('Sign 成功');
-        this.loadTodayData();
+        localStorage.setItem('username', this.user);
+        this.getConfig().then(res => this.loadTodayData());
         this.loadHistory();
+        this.registerUserName()
       }).catch(e => {
         this.loginLoading = false;
         this.$message.error('标识符或名称错误')
       })
+    },
+    registerUserName(){
+      const username = localStorage.getItem('username') ? localStorage.getItem('username') : 'Ye Zhikang'
+      if(username === 'wangyaxuan'){
+        this.$parent.$parent.$data.user = username;
+        this.$on('hook:beforeDestroy', () => {
+          this.$parent.$parent.$data.user = 'Ye Zhikang';
+        });
+      }else{
+        this.$parent.$parent.$data.user = 'Ye Zhikang';
+      }
     },
     loadHistory(){
       service.get('/api/review/history').then(res => {

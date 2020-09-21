@@ -5,7 +5,7 @@
     :show-close="false"
     title="提示"
     :visible.sync="dialogVisible"
-    width="30%"
+    width="90%"
   >
     <div class="fb">
       <el-input style="width: 40%" placeholder="标识符" :value="identify"
@@ -20,7 +20,7 @@
       <el-input type="textarea" :value="taskDescription" @input="val => $emit('update:taskDescription', val)" placeholder="描述"></el-input>
     </div>
     <span slot="footer" class="dialog-footer">
-        <el-button :disabled="loading" @click="$emit('update:addTaskDialogVisible', false)">取 消</el-button>
+        <el-button :disabled="loading" @click="$emit('update:dialogVisible', false)">取 消</el-button>
         <el-button :loading="loading" @click="handleAdd" type="primary">确 定</el-button>
     </span>
   </el-dialog>
