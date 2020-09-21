@@ -82,6 +82,11 @@ import AddTaskDialog from '@/components/review/add-task-dialog';
 export default {
   name: 'review',
   components: { AddTaskDialog, 'user-login-dialog': UserLogin, ReviewDaily, StandardPage },
+  head() {
+    return {
+      title: '回顾今天',
+    };
+  },
   created() {
     this.resizeWindow();
     service.get('/api/review/is-login').then(res => {
