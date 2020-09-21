@@ -88,3 +88,14 @@ html,body{
   -webkit-line-clamp: 1;
 }
 
+mark{
+  background: #2c3e50;
+  border-radius: 3px;
+  color: white;
+  padding: 2px;
+}
+
+div.container.is-large-content{
+  width: 80%;
+}
+

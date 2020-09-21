@@ -1,35 +1,42 @@
 <template>
   <div class="to-a">
-    <ul>
+    <ul :class="{'is-large-nav': isLarge}">
       <li>
         <nuxt-link class="index-link" :to="{ name: 'index' }"
-          ><h2><i class="el-icon-ice-cream"></i> Ye Zhikang</h2>
+        ><h2><i class="el-icon-ice-cream"></i> {{ user }}</h2>
         </nuxt-link>
       </li>
       <div class="button-group">
-        <li v-if="!isMobile">
+        <li class="mobile-dpn">
           <h3>
             <router-link :to="{ name: 'pages' }" :class="{ navActive: isActive[0], 'nav-link': true }"
-              >Articles
+            >Articles
             </router-link>
           </h3>
         </li>
-        <li v-if="!isMobile">
+        <li class="mobile-dpn">
           <h3>
             <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[1], 'nav-link': true }"
             >数据结构与算法
             </router-link>
           </h3>
         </li>
-        <li v-if="!isMobile">
+        <li class="mobile-dpn">
           <h3>
             <router-link :to="{ name: 'idea' }" :class="{ navActive: isActive[2], 'nav-link': true }">
               Idea
             </router-link>
           </h3>
         </li>
+        <li class="mobile-dpn">
+          <h3>
+            <router-link :to="{ name: 'review' }" :class="{ navActive: isActive[3], 'nav-link': true }">
+              Review
+            </router-link>
+          </h3>
+        </li>
         <li>
-          <theme-radio />
+          <theme-radio/>
         </li>
       </div>
     </ul>
@@ -42,24 +49,31 @@ import ThemeRadio from './ThemeRadio';
 export default {
   name: 'Nav',
   components: { ThemeRadio },
+  props: {
+    isLarge: {
+      type: Boolean,
+      default: false,
+    },
+    user: {
+      type: String,
+      default: 'Ye Zhikang',
+    },
+  },
   data() {
     return {
       isActive: [false, false, false],
-      isMobile: false,
     };
   },
   methods: {
-    triggerScroll(target){
-      if(document.documentElement.clientWidth < 600){
-        this.isMobile = true;
-        target.classList.add('to-a__collapsed')
+    triggerScroll(target) {
+      if (document.documentElement.clientWidth < 600) {
+        target.classList.add('to-a__collapsed');
         return;
       }
-      this.isMobile = false;
-      if(document.documentElement.scrollTop < 20){
-        target.classList.remove('to-a__collapsed')
-      }else{
-        target.classList.add('to-a__collapsed')
+      if (document.documentElement.scrollTop < 20) {
+        target.classList.remove('to-a__collapsed');
+      } else {
+        target.classList.add('to-a__collapsed');
       }
     },
     addNavListener() {
@@ -79,9 +93,9 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (val) {
-        console.log(val)
-        switch (val.name){
+      handler: function(val) {
+        console.log(val);
+        switch (val.name) {
           case 'Home':
             this.isActive = [false, false, false];
             return;
@@ -103,9 +117,6 @@ export default {
     },
   },
   mounted() {
-    if (window.innerWidth <= 800) {
-      this.isMobile = true;
-    }
     if (!window.isMobile) {
       this.addNavListener();
     }
@@ -144,7 +155,7 @@ a:hover {
 
 .to-a__collapsed {
   height: 58px;
-  box-shadow: 0 0 6px rgba(0,0,0,.1);
+  box-shadow: 0 0 6px rgba(0, 0, 0, .1);
 }
 
 /*.to-a:hover{*/
@@ -162,6 +173,10 @@ ul {
   justify-content: space-between;
   list-style: none;
   transition: 0.2s ease;
+}
+
+ul.is-large-nav {
+  width: 80%;
 }
 
 li {
@@ -192,7 +207,7 @@ h3 {
   }
 
   ul {
-    width: 90%;
+    width: 90% !important;
     justify-content: space-between;
   }
 
@@ -213,7 +228,17 @@ h3 {
   box-shadow: 0 0 5px lightgray;
 }
 
+.mobile-dpn {
+
+}
+
 .shadow-box--none {
   box-shadow: none;
+}
+
+@media screen and (max-width: 600px) {
+  .mobile-dpn {
+    display: none;
+  }
 }
 </style>

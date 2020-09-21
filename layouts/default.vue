@@ -1,17 +1,24 @@
 <template>
   <div style="height: 100vh">
-    <the-nav/>
-    <nuxt />
+    <the-nav :user="user" :is-large="isLarge"/>
+    <nuxt/>
   </div>
 </template>
 
 <script>
-  import TheNav from "../components/TheNav";
-  export default {
-      components:{
-          TheNav
-      }
+import TheNav from '../components/TheNav';
+
+export default {
+  components: {
+    TheNav,
+  },
+  data(){
+    return {
+      isLarge: false,
+      user: 'Ye Zhikang'
+    }
   }
+};
 
 </script>
 <style>
