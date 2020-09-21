@@ -1,3 +1,3 @@
 module.exports = {
-  BASE_URL: 'http://127.0.0.1:3020',
+  BASE_URL: 'http://www.yezhikang.site:3021',
 }

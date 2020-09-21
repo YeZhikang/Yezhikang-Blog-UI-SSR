@@ -5,10 +5,16 @@
     :show-close="false"
     title="提示"
     :visible.sync="dialogVisible"
-    width="30%"
+    width="80%"
   >
-    名字：<el-input :value="user" @input="val => $emit('update:user', val)"></el-input>
-    标识符：<el-input :value="identify" @input="val => $emit('update:identify', val)" type="password"></el-input>
+    <div class="fa">
+      <span style="width: 140px">名字：</span>
+      <el-input :value="user" @input="val => $emit('update:user', val)"></el-input>
+    </div>
+    <div class="fa mt20">
+      <span style="width: 140px">标识符：</span>
+      <el-input :value="identify" @input="val => $emit('update:identify', val)" type="password"></el-input>
+    </div>
     <span slot="footer" class="dialog-footer">
         <el-button :disabled="loading" @click="$emit('update:dialogVisible', false)">取 消</el-button>
         <el-button :loading="loading" @click="handleSign" type="primary">确 定</el-button>
@@ -21,23 +27,23 @@ export default {
   name: 'user-login',
   props: {
     user: {
-      type: String
+      type: String,
     },
     identify: {
-      type: String
+      type: String,
     },
     dialogVisible: {
-      type: Boolean
+      type: Boolean,
     },
     loading: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   methods: {
-    handleSign(){
-      this.$emit('handle-sign')
-    }
-  }
+    handleSign() {
+      this.$emit('handle-sign');
+    },
+  },
 };
 </script>
 
