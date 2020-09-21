@@ -2,42 +2,33 @@
   <div>
     <div class="main-body">
       <div>
-        <h1>Articles</h1>
-        <div
-          v-for="(cate, index) in cateLst"
-          :key="index"
-          :class="{ buttonActive: isActive[index], 'cate-button': true }"
-          @click="activeButton(index)"
-        >
-          {{ cate }}
-        </div>
+        <h1>数据结构与算法</h1>
+        <span>及时归纳，及时整理</span>
       </div>
       <div class="input-search">
         <input class="search-input" type="text" placeholder="点击此处来进行搜索" v-model="text" />
         <h3>{{ resultNum }}</h3>
       </div>
-      <div class="searchedRes articles-area" style="min-height: 150px;">
-        <template v-if="resultNum">
-          <div
-            @click="turnToArticles(articleRes.urlHash)"
-            v-for="(articleRes, index) in articles"
-            :key="index"
-            class="searchedUnit"
-          >
-            <img class="cover" :src="pngCate[articleRes.category]" />
-            <div class="title-continue-isnew">
-              <div class="title-continue">
-                <h2>{{ articleRes.file }}</h2>
-                <p>{{ articleRes.time | changeToMDY }}</p>
-              </div>
-              <div class="isnew" style="min-width: 48px;">
-                <el-tag type="warning" v-if="isNew(articleRes.time)">New </el-tag>
-              </div>
+      <div class="searchedRes articles-area" style="min-height: 150px;" v-if="cacheArticle.length">
+        <div
+          @click="turnToArticles(articleRes.time, articleRes.file)"
+          v-for="(articleRes, index) in cacheArticle"
+          :key="index"
+          class="searchedUnit"
+        >
+          <img class="cover" :src="pngCate.Design" />
+          <div class="title-continue-isnew">
+            <div class="title-continue">
+              <h2>{{ articleRes.file }}</h2>
+              <p>{{ articleRes.time | changeToMDY }}</p>
+            </div>
+            <div class="isnew" style="min-width: 48px;">
+              <el-tag type="warning" v-if="isNew(articleRes.time)">New </el-tag>
             </div>
           </div>
-        </template>
+        </div>
       </div>
-      <div class="searchedRes" style="min-height: 150px;" v-if="!resultNum">
+      <div class="searchedRes" style="min-height: 150px;" v-if="!cacheArticle.length">
         <h2 style="font-size: 20px; font-weight: 500; color: #757575;">No Results</h2>
       </div>
       <div style="width: 100%;">
@@ -48,23 +39,24 @@
 </template>
 
 <script>
-import TheFooter from '../components/TheFooter';
-import JavaScript from '../assets/blogs/javascript.png';
-import React from '../assets/blogs/react.png';
-import Vue from '../assets/blogs/vue.png';
-import CSS from '../assets/blogs/css.png';
-import Golang from '../assets/blogs/Golang.png';
-import DailyLife from '../assets/blogs/Daily Life.png';
-import Design from '../assets/blogs/Design.png';
-import NodeJS from '../assets/blogs/Node.JS.png';
-import Python from '../assets/blogs/Python.png';
-import SolveWay from '../assets/blogs/SolveWay.png';
-import Tool from '../assets/blogs/Tool.png';
+import TheFooter from '../../components/TheFooter';
+import JavaScript from 'assets/blogs/javascript.png';
+import React from 'assets/blogs/react.png';
+import Vue from 'assets/blogs/vue.png';
+import CSS from 'assets/blogs/css.png';
+import Golang from 'assets/blogs/Golang.png';
+import DailyLife from 'assets/blogs/Daily Life.png';
+import Design from 'assets/blogs/Design.png';
+import NodeJS from 'assets/blogs/Node.JS.png';
+import Python from 'assets/blogs/Python.png';
+import SolveWay from 'assets/blogs/SolveWay.png';
+import Tool from 'assets/blogs/Tool.png';
 import { Loading } from 'element-ui';
 import axios from 'axios';
+import service from '@/service';
 
 export default {
-  name: 'Pages',
+  name: 'Algorithm',
   components: { TheFooter },
   head() {
     return {
@@ -91,10 +83,9 @@ export default {
   data() {
     return {
       isActive: [false, false, false, false, false],
-      cateLst: ['代码', '工具', '设计', '生活笔记', '解决方案'],
       text: '',
       articles: [],
-      pngCate: {
+      pngCate: Object.freeze({
         JavaScript,
         Vue,
         React,
@@ -106,7 +97,8 @@ export default {
         SolveWay,
         Tool,
         DailyLife,
-      },
+      }),
+      cacheArticle: []
     };
   },
   computed: {
@@ -122,51 +114,14 @@ export default {
     },
   },
   methods: {
-    getActiveLabels() {
-      let activeLabels = [];
-      for (let index = 0; index < this.isActive.length; index++) {
-        if (this.isActive[index] === true) {
-          activeLabels.push(this.cateLst[index]);
-        }
-      }
-      return activeLabels;
-    },
-    activeButton(index) {
-      let isActive = [...this.isActive];
-      isActive[index] = !isActive[index];
-      this.isActive = isActive;
-
-      if (this.getActiveLabels().length > 0) {
-        this.getArticles(this.getActiveLabels(), this.text);
-      } else {
-        this.getArticles(this.getActiveLabels(), this.text);
-      }
-    },
-    getArticles(activeLabels, text) {
-      this.$nextTick(() => {
-        let loadingInstance1 = Loading.service({ target: '.articles-area', background: this.isDark });
-
-        this.$axios
-          .post('/getArticles', { activeLabels: activeLabels, text: text })
-          .then((res) => {
-            console.log(res.data.articles);
-            this.articles = res.data.articles.reverse();
-            loadingInstance1.close();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    },
-
     isNew(time) {
       return new Date() - new Date(time) < 100000000;
     },
-    turnToArticles(urlHash) {
+    turnToArticles(time, file) {
       this.$router.push({
-        name: 'article-hash',
+        name: 'algorithm-detail-file',
         params: {
-          hash: urlHash,
+          file: `${new Date(Number(time)).toLocaleDateString()}/${file}`,
         },
       });
     },
@@ -177,23 +132,21 @@ export default {
   watch: {
     text: {
       handler: function (val) {
-        console.log(this.getActiveLabels());
-        this.getArticles(this.getActiveLabels(), val);
+        this.cacheArticle = this.articles.filter(item => item.file.includes(val))
       },
+      immediate: true
     },
   },
   created() {
     // document.title = "博客清单"
   },
   asyncData({ params }) {
-    return axios
-      .post('http://www.yezhikang.site:8081/getArticles', { activeLabels: [], text: '' })
-      .then((res) => {
-        console.log(res);
-
+    return service
+      .get('/api/algorithm')
+      .then(({ data }) => {
         return {
-          articles: res.data.articles.reverse(),
-        };
+          articles: data
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -201,7 +154,7 @@ export default {
   },
   filters: {
     changeToMDY(value) {
-      return new Date(value).toString().split(' ').slice(0, 4).join(' ');
+      return new Date(Number(value)).toString().split(' ').slice(0, 4).join(' ');
     },
   },
 };
@@ -290,7 +243,7 @@ export default {
 
 .searchedUnit {
   display: flex;
-  padding: 6px 6px 13px 0px;
+  padding: 6px 6px 6px 6px;
   align-items: center;
   justify-content: space-between;
   border-radius: 4px;

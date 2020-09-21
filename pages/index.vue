@@ -153,7 +153,8 @@ export default {
       return new Date() - new Date(time) < 100000000;
     },
   },
-  created() {
+  async created() {
+
     // document.title = "叶志康的博客"
   },
   mounted() {
@@ -179,7 +180,7 @@ export default {
   margin-top: 40px;
 }
 .main-body {
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   margin: auto;
   padding-bottom: 25px;
 }

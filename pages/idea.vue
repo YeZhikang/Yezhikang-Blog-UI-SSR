@@ -192,7 +192,7 @@ export default {
 <style lang="scss" scoped>
 .main-body {
   margin: 0 auto;
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   padding-top: 200px;
   /*height: 100%;*/
   box-sizing: border-box;

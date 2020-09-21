@@ -1,35 +1,42 @@
 <template>
   <div class="to-a">
-    <ul>
+    <ul :class="{'is-large-nav': isLarge}">
       <li>
         <nuxt-link class="index-link" :to="{ name: 'index' }"
-          ><h2><i class="el-icon-ice-cream"></i> Ye Zhikang</h2>
+        ><h2><i class="el-icon-ice-cream"></i> {{ user }}</h2>
         </nuxt-link>
       </li>
       <div class="button-group">
-        <li v-if="!isMobile">
+        <li class="mobile-dpn">
           <h3>
-            <router-link :to="{ name: 'pages' }" :class="{ navActive: isActive[1], 'nav-link': true }"
-              >Articles
+            <router-link :to="{ name: 'pages' }" :class="{ navActive: isActive[0], 'nav-link': true }"
+            >Articles
             </router-link>
           </h3>
         </li>
-        <li v-if="!isMobile">
+        <li class="mobile-dpn">
+          <h3>
+            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[1], 'nav-link': true }"
+            >数据结构与算法
+            </router-link>
+          </h3>
+        </li>
+        <li class="mobile-dpn">
           <h3>
             <router-link :to="{ name: 'idea' }" :class="{ navActive: isActive[2], 'nav-link': true }">
               Idea
             </router-link>
           </h3>
         </li>
-        <li v-if="!isMobile">
+        <li class="mobile-dpn">
           <h3>
-            <router-link :to="{ name: 'me' }" :class="{ navActive: isActive[0], 'nav-link': true }"
-              >About Me
+            <router-link :to="{ name: 'review' }" :class="{ navActive: isActive[3], 'nav-link': true }">
+              Review
             </router-link>
           </h3>
         </li>
         <li>
-          <theme-radio />
+          <theme-radio/>
         </li>
       </div>
     </ul>
@@ -42,45 +49,36 @@ import ThemeRadio from './ThemeRadio';
 export default {
   name: 'Nav',
   components: { ThemeRadio },
+  props: {
+    isLarge: {
+      type: Boolean,
+      default: false,
+    },
+    user: {
+      type: String,
+      default: 'Ye Zhikang',
+    },
+  },
   data() {
     return {
       isActive: [false, false, false],
-      isMobile: false,
     };
   },
   methods: {
+    triggerScroll(target) {
+      if (document.documentElement.clientWidth < 600) {
+        target.classList.add('to-a__collapsed');
+        return;
+      }
+      if (document.documentElement.scrollTop < 20) {
+        target.classList.remove('to-a__collapsed');
+      } else {
+        target.classList.add('to-a__collapsed');
+      }
+    },
     addNavListener() {
       let toA = document.querySelector('.to-a');
-
-      function func1() {
-        if (document.documentElement.scrollTop <= 20) {
-          toA.style.height = '165px';
-          toA.classList.add('shadow-box--none');
-        } else {
-          toA.style.height = '58px';
-          toA.classList.add('shadow-box');
-          toA.classList.remove('shadow-box--none');
-        }
-      }
-
-      const func2 = () => {
-        if (innerWidth <= 800) {
-          this.isMobile = true;
-          toA.style.height = '58px';
-
-          removeEventListener('scroll', func1, false);
-        } else {
-          this.isMobile = false;
-
-          addEventListener('scroll', func1, false);
-        }
-      };
-
-      func2();
-      addEventListener('resize', func2, false);
-      if (innerWidth < 720) {
-        removeEventListener('scroll', func1, false);
-      }
+      window.addEventListener('scroll', this.triggerScroll.bind(this, toA));
     },
     // haha2(){
     //     let toA = document.querySelector(".to-a")
@@ -95,26 +93,30 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (val) {
-        if (val.name === 'Home') {
-          this.isActive = [false, false, false];
-        } else if (val.name === 'write') {
-          this.isActive = [false, false, false];
-        } else if (val.name === 'pages' || val.name === 'articles') {
-          this.isActive = [false, true, false];
-        } else if (val.name === 'me') {
-          this.isActive = [true, false, false];
-        } else if (val.name === 'idea') {
-          this.isActive = [false, false, true];
+      handler: function(val) {
+        console.log(val);
+        switch (val.name) {
+          case 'Home':
+            this.isActive = [false, false, false];
+            return;
+          case 'write':
+            this.isActive = [false, false, false];
+            return;
+          case 'pages' || 'articles':
+            this.isActive = [true, false, false];
+            return;
+          case 'algorithm':
+            this.isActive = [false, true, false];
+            return;
+          case 'idea':
+            this.isActive = [false, false, true];
+            return;
         }
       },
       immediate: true,
     },
   },
   mounted() {
-    if (window.innerWidth <= 800) {
-      this.isMobile = true;
-    }
     if (!window.isMobile) {
       this.addNavListener();
     }
@@ -131,16 +133,11 @@ a {
 
 a:hover {
   color: #517598;
-  border-top: 5px solid darkcyan;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+
 }
 
 .navActive {
-  color: black;
-  border-top: 5px solid darkcyan;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  color: darkcyan;
 }
 
 .to-a {
@@ -156,6 +153,11 @@ a:hover {
   background-color: white;
 }
 
+.to-a__collapsed {
+  height: 58px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+}
+
 /*.to-a:hover{*/
 /*    box-shadow: none;*/
 /*    height: 112px;*/
@@ -165,12 +167,16 @@ ul {
   display: flex;
   align-items: center;
   padding: 0;
-  width: calc(60% + (1440px - 100%) / 3);
+  width: calc(52% + (1440px - 100%) / 3);
   height: 100%;
   margin: 0 auto;
   justify-content: space-between;
   list-style: none;
   transition: 0.2s ease;
+}
+
+ul.is-large-nav {
+  width: 80%;
 }
 
 li {
@@ -201,7 +207,7 @@ h3 {
   }
 
   ul {
-    width: 90%;
+    width: 90% !important;
     justify-content: space-between;
   }
 
@@ -222,7 +228,17 @@ h3 {
   box-shadow: 0 0 5px lightgray;
 }
 
+.mobile-dpn {
+
+}
+
 .shadow-box--none {
   box-shadow: none;
+}
+
+@media screen and (max-width: 600px) {
+  .mobile-dpn {
+    display: none;
+  }
 }
 </style>

@@ -1,3 +1,6 @@
+console.log(process.env.NODE_ENV)
+const config = require('./config/config')(process.env.NODE_ENV);
+
 module.exports = {
   mode: 'universal',
   /*
@@ -70,5 +73,8 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  env: {
+    ...config
   }
 }

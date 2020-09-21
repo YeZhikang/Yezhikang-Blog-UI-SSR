@@ -2,22 +2,19 @@
   <div style="width: 100%;">
     <div class="main">
       <div style="display: flex; align-items: center; width: 100%;">
-        <img class="imgLogo" :src="pngCate[blogInfo.category]" />
+        <img class="imgLogo" :src="pngCate.Design" />
         <div>
           <h1 class="title" style="word-break: break-all; margin-bottom: 0; margin-top: 0;">{{ blogInfo.file }}</h1>
           <span style="font-size: 13px; color: darkgrey; line-height: 1;"
-            >{{ blogInfo.time }} / <span style="font-weight: 600; font-size: 15px;"> share</span></span
+          >{{ blogInfo.time }} / <span style="font-weight: 600; font-size: 15px;"> share</span></span
           ><br />
-          <el-tag class="index-button--primary" style="margin-top: 20px;" type="primary" size="mini" plain
-            >{{ blogInfo.category }}
-          </el-tag>
           <el-tag
             class="index-button--warning"
-            style="margin-top: 20px; margin-left: 6px;"
-            type="warning"
+            style="margin-top: 20px"
+            type="primary"
             size="mini"
             plain
-            >Blog
+          >数据结构与算法
           </el-tag>
           <!--          <el-tag v-if="userName === 'super'" @click="deleteBlog()" type="danger" size="mini">删除博客</el-tag>-->
         </div>
@@ -41,52 +38,37 @@
 </template>
 
 <script>
-import TheFooter from '../../components/TheFooter';
-import JavaScript from '../../assets/blogs/javascript.png';
-import React from '../../assets/blogs/react.png';
-import Vue from '../../assets/blogs/vue.png';
-import CSS from '../../assets/blogs/css.png';
-import Golang from '../../assets/blogs/Golang.png';
-import DailyLife from '../../assets/blogs/Daily Life.png';
-import Design from '../../assets/blogs/Design.png';
-import NodeJS from '../../assets/blogs/Node.JS.png';
-import Python from '../../assets/blogs/Python.png';
-import SolveWay from '../../assets/blogs/SolveWay.png';
-import Tool from '../../assets/blogs/Tool.png';
+import TheFooter from '../../../components/TheFooter';
+import JavaScript from 'assets/blogs/javascript.png';
+import React from 'assets/blogs/react.png';
+import Vue from 'assets/blogs/vue.png';
+import CSS from 'assets/blogs/css.png';
+import Golang from 'assets/blogs/Golang.png';
+import DailyLife from 'assets/blogs/Daily Life.png';
+import Design from 'assets/blogs/Design.png';
+import NodeJS from 'assets/blogs/Node.JS.png';
+import Python from 'assets/blogs/Python.png';
+import SolveWay from 'assets/blogs/SolveWay.png';
+import Tool from 'assets/blogs/Tool.png';
 import { Loading } from 'element-ui';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/a11y-dark.css';
 import axios from 'axios';
 import marked from 'marked';
 import ArticleAnchor from '@/components/article-anchor';
+import service from '@/service';
 
 const translateText = (str) => {
+
   return str.replace(/https:\/\/www.yezhikang.site/g, 'http://www.yezhikang.site');
 };
 
 export default {
-  name: 'Article',
+  name: 'File',
   components: { ArticleAnchor, TheFooter },
   head() {
     return {
       title: `${this.blogInfo.file} - 叶志康`,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `${this.blogInfo.file} ### ${this.blogInfo.text.slice(0, 300)}`,
-        },
-        {
-          hid: 'viewport',
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1.0',
-        },
-        {
-          hid: 'description',
-          name: 'title',
-          content: '叶志康的个人博客',
-        },
-      ],
     };
   },
   data() {
@@ -172,21 +154,22 @@ export default {
       });
     },
   },
-  asyncData({ params }) {
-    return axios
-      .post('http://www.yezhikang.site:8081/getmd', { hash: params.hash })
-      .then((res) => {
-        // this.title = res.data.file;
-        // this.time = res.data.time;
-        // this.category = res.data.category;
-        const txt = marked(translateText(res.data.text)).replace(/<h1.+<\/h1>/, '');;
+  asyncData({ params: {file} }) {
+    return service
+      .get(`${process.env.BASE_URL}/api/algorithm/one`, {
+        params: {
+          file
+        },
+      })
+      .then(({ data: {file,text,time} }) => {
+        const txt = marked(translateText(text)).replace(/<h1.+<\/h1>/, '');
         return {
-          blogInfo: res.data,
+          blogInfo: {
+            time,
+            file
+          },
           mdHtml: txt,
         };
-        // window.document.title = this.title + " — Yezhikang";
-        // loadingInstance1.close()
-        // console.log(res.data)
       })
       .catch((error) => {
         console.log(error);

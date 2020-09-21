@@ -52,7 +52,7 @@ export default {
   text-align: left;
   width: 60%;
   margin: 0 auto;
-  padding-top: 180px;
+  padding-top: 160px;
 }
 .imgLogo {
   width: 150px;
