@@ -247,7 +247,7 @@ export default {
           const tasks = {...data.contentTask, ...data.highlightTask};
           for(let item of this.missions){
             if(item.id in tasks){
-              this.$set(item, 'isFinished', true)
+              this.$set(item, 'isFinished', tasks[item.id])
             }
           }
           this.dailyReport = data.dailyReport;
