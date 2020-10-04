@@ -9,7 +9,7 @@ build:
 start:
 	npx pm2 start npm --name $(project-name)  -- run start
 
-stop:
+delete:
 	npx pm2 delete $(project-name)
 
-fast-build: download build start
+fast-build: download build delete start
