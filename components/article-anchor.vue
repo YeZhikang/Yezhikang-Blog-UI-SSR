@@ -78,7 +78,7 @@ export default {
     .el-icon-arrow-up{
       color: black;
       font-weight: 800;
-      font-size: 20px;
+      font-size: 28px;
     }
   }
 }

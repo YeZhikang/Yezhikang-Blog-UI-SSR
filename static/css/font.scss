@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Cascadia Code';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Cascadia Code'), local('Cascadia-Code'),
+  url('../font/CascadiaCode.woff2') format('woff2'); /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
 .rl{
   text-decoration: none;
   color: #686868;
