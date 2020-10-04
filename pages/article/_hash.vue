@@ -1,19 +1,19 @@
 <template>
-  <div style="width: 100%;">
+  <div style="width: 100%">
     <div class="main">
-      <div style="display: flex; align-items: center; width: 100%;">
+      <div style="display: flex; align-items: center; width: 100%">
         <img class="imgLogo" :src="pngCate[blogInfo.category]" />
         <div>
-          <h1 class="title" style="word-break: break-all; margin-bottom: 0; margin-top: 0;">{{ blogInfo.file }}</h1>
-          <span style="font-size: 13px; color: darkgrey; line-height: 1;"
-            >{{ blogInfo.time }} / <span style="font-weight: 600; font-size: 15px;"> share</span></span
+          <h1 class="title" style="word-break: break-all; margin-bottom: 0; margin-top: 0">{{ blogInfo.file }}</h1>
+          <span style="font-size: 13px; color: darkgrey; line-height: 1"
+            >{{ blogInfo.time }} / <span style="font-weight: 600; font-size: 15px"> share</span></span
           ><br />
-          <el-tag class="index-button--primary" style="margin-top: 20px;" type="primary" size="mini" plain
+          <el-tag class="index-button--primary" style="margin-top: 20px" type="primary" size="mini" plain
             >{{ blogInfo.category }}
           </el-tag>
           <el-tag
             class="index-button--warning"
-            style="margin-top: 20px; margin-left: 6px;"
+            style="margin-top: 20px; margin-left: 6px"
             type="warning"
             size="mini"
             plain
@@ -140,7 +140,7 @@ export default {
     window.addEventListener('scroll', this.addAnchor, false);
     this.$on('hook:beforeDestroy', () => {
       window.removeEventListener('scroll', this.addAnchor, false);
-    })
+    });
   },
   methods: {
     deleteBlog() {
@@ -156,13 +156,13 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    addAnchor(){
-      if(document.documentElement.scrollTop > 300){
-        this.$refs.anchor.$el.classList.add('article-anchor__not-alpha')
-      }else{
-        this.$refs.anchor.$el.classList.remove('article-anchor__not-alpha')
+    addAnchor() {
+      if (document.documentElement.scrollTop > 300) {
+        this.$refs.anchor.$el.classList.add('article-anchor__not-alpha');
+      } else {
+        this.$refs.anchor.$el.classList.remove('article-anchor__not-alpha');
       }
-    }
+    },
   },
   directives: {
     highlight(el) {
@@ -179,7 +179,7 @@ export default {
         // this.title = res.data.file;
         // this.time = res.data.time;
         // this.category = res.data.category;
-        const txt = marked(translateText(res.data.text)).replace(/<h1.+<\/h1>/, '');;
+        const txt = marked(translateText(res.data.text)).replace(/<h1.+<\/h1>/, '');
         return {
           blogInfo: res.data,
           mdHtml: txt,
@@ -223,17 +223,17 @@ export default {
   font-size: 15px;
 }
 
-.htmlBlock >>> code{
-  font-family: monaco, serif;
+.htmlBlock >>> code {
+  font-family: 'Cascadia Code';
   font-size: 12px;
 }
 
-.htmlBlock >>> ul{
+.htmlBlock >>> ul {
   padding-left: 14px;
   font-size: 14px;
 }
 
-.htmlBlock >>> li p{
+.htmlBlock >>> li p {
   margin: 4px 0;
 }
 
