@@ -158,9 +158,9 @@ export default {
     },
     addAnchor(){
       if(document.documentElement.scrollTop > 300){
-        this.$refs.anchor.$el.classList.remove('article-anchor__alpha')
+        this.$refs.anchor.$el.classList.add('article-anchor__not-alpha')
       }else{
-        this.$refs.anchor.$el.classList.add('article-anchor__alpha')
+        this.$refs.anchor.$el.classList.remove('article-anchor__not-alpha')
       }
     }
   },
