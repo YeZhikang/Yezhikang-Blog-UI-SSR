@@ -14,13 +14,13 @@
             </router-link>
           </h3>
         </li>
-        <li class="mobile-dpn">
-          <h3>
-            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[1], 'nav-link': true }"
-            >数据结构与算法
-            </router-link>
-          </h3>
-        </li>
+<!--        <li class="mobile-dpn">-->
+<!--          <h3>-->
+<!--            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[1], 'nav-link': true }"-->
+<!--            >数据结构与算法-->
+<!--            </router-link>-->
+<!--          </h3>-->
+<!--        </li>-->
         <li class="mobile-dpn">
           <h3>
             <router-link :to="{ name: 'idea' }" :class="{ navActive: isActive[2], 'nav-link': true }">
@@ -28,13 +28,13 @@
             </router-link>
           </h3>
         </li>
-        <li class="mobile-dpn">
-          <h3>
-            <router-link :to="{ name: 'review' }" :class="{ navActive: isActive[3], 'nav-link': true }">
-              Review
-            </router-link>
-          </h3>
-        </li>
+<!--        <li class="mobile-dpn">-->
+<!--          <h3>-->
+<!--            <router-link :to="{ name: 'review' }" :class="{ navActive: isActive[3], 'nav-link': true }">-->
+<!--              Review-->
+<!--            </router-link>-->
+<!--          </h3>-->
+<!--        </li>-->
         <li>
           <theme-radio/>
         </li>
@@ -110,6 +110,9 @@ export default {
             return;
           case 'idea':
             this.isActive = [false, false, true];
+            return;
+          default:
+            this.isActive = [false, false, false];
             return;
         }
       },

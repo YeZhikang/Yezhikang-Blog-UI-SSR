@@ -19,6 +19,11 @@
             plain
             >Blog
           </el-tag>
+          <span
+            style="margin-top: 20px; margin-left: 6px; font-size: 12px"
+          >
+            访问量：{{ blogInfo.views }}
+          </span>
           <!--          <el-tag v-if="userName === 'super'" @click="deleteBlog()" type="danger" size="mini">删除博客</el-tag>-->
         </div>
       </div>

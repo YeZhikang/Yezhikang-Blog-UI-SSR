@@ -11,6 +11,14 @@ body.dark{
     box-shadow: none;
   }
 
+  .el-card__body{
+    background: #282c35;
+    color: #ddd;
+    border: 1px solid rgba(0,0,0, .6);
+    border-radius: 8px;
+    box-shadow:0 0 3px rgb(244,244,244);
+  }
+
   .htmlBlock a{
     color: #ff9089;
   }
@@ -22,7 +30,7 @@ body.dark{
 
   .nav-link:hover{
     color: #ff9089;
-    border-top: 5px solid #ff9089;
+    //border-top: 5px solid #ff9089;
   }
 
   .navActive{

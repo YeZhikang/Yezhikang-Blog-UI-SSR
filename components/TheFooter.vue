@@ -84,7 +84,6 @@ li {
   display: flex;
   justify-content: space-between;
   line-height: 0;
-  border-left: 7px solid darkcyan;
 }
 
 @media screen and (max-width: 720px) {
