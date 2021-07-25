@@ -187,7 +187,7 @@ export default {
   },
   asyncData({ params }) {
     return axios
-      .post('http://www.yezhikang.site:8081/getArticles', { activeLabels: [], text: '' })
+      .post('http://121.43.155.100:8081/getArticles', { activeLabels: [], text: '' })
       .then((res) => {
         console.log(res);
 

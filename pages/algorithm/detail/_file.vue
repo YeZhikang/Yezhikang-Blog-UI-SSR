@@ -60,7 +60,7 @@ import service from '@/service';
 
 const translateText = (str) => {
 
-  return str.replace(/https:\/\/www.yezhikang.site/g, 'http://www.yezhikang.site');
+  return str.replace(/https:\/\/www.yezhikang.site/g, 'http://121.43.155.100');
 };
 
 export default {

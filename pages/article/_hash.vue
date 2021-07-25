@@ -61,7 +61,7 @@ import marked from 'marked';
 import ArticleAnchor from '@/components/article-anchor';
 
 const translateText = (str) => {
-  return str.replace(/https:\/\/www.yezhikang.site/g, 'http://www.yezhikang.site');
+  return str.replace(/https:\/\/www.yezhikang.site/g, 'http://121.43.155.100');
 };
 
 export default {
@@ -174,7 +174,7 @@ export default {
   },
   asyncData({ params }) {
     return axios
-      .post('http://www.yezhikang.site:8081/getmd', { hash: params.hash })
+      .post('http://121.43.155.100:8081/getmd', { hash: params.hash })
       .then((res) => {
         // this.title = res.data.file;
         // this.time = res.data.time;

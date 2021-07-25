@@ -16,22 +16,8 @@
         </li>
         <li class="mobile-dpn">
           <h3>
-            <router-link :to="{ name: 'algorithm' }" :class="{ navActive: isActive[1], 'nav-link': true }"
-            >数据结构与算法
-            </router-link>
-          </h3>
-        </li>
-        <li class="mobile-dpn">
-          <h3>
-            <router-link :to="{ name: 'idea' }" :class="{ navActive: isActive[2], 'nav-link': true }">
+            <router-link :to="{ name: 'idea' }" :class="{ navActive: isActive[1], 'nav-link': true }">
               Idea
-            </router-link>
-          </h3>
-        </li>
-        <li class="mobile-dpn">
-          <h3>
-            <router-link :to="{ name: 'review' }" :class="{ navActive: isActive[3], 'nav-link': true }">
-              Review
             </router-link>
           </h3>
         </li>
@@ -96,20 +82,17 @@ export default {
       handler: function(val) {
         console.log(val);
         switch (val.name) {
-          case 'Home':
-            this.isActive = [false, false, false];
+          case 'index':
+            this.isActive = [false, false];
             return;
           case 'write':
-            this.isActive = [false, false, false];
+            this.isActive = [false, false];
             return;
           case 'pages' || 'articles':
-            this.isActive = [true, false, false];
-            return;
-          case 'algorithm':
-            this.isActive = [false, true, false];
+            this.isActive = [true, false];
             return;
           case 'idea':
-            this.isActive = [false, false, true];
+            this.isActive = [false, true];
             return;
         }
       },
