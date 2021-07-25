@@ -120,7 +120,7 @@ export default {
     },
     uploadUrl(){
       if(this.to === 'article'){
-        return 'http://www.yezhikang.site:8081/mdUpload'
+        return 'http://121.43.155.100:8081/mdUpload'
       }else{
         return `${process.env.BASE_URL}/api/algorithm`
       }

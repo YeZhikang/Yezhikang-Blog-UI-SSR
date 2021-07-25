@@ -162,7 +162,7 @@ export default {
   },
   asyncData() {
     return axios
-      .post('http://www.yezhikang.site:8081/getArticles', { activeLabels: [], text: '' })
+      .post('http://121.43.155.100:8081/getArticles', { activeLabels: [], text: '' })
       .then((res) => {
         return {
           articleLst: res.data.articles.reverse().slice(0, 10),
